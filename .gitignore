@@ -1,0 +1,9 @@
+target/
+*.log.*
+*.log
+alf_data_dev/
+run-mg.sh
+release.properties
+.settings/
+.project
+.classpath
