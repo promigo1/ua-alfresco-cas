@@ -9,32 +9,11 @@
     <packaging>pom</packaging>
 
     <properties>
-        <java.cas.client.config.strategy>PROPERTY_FILE</java.cas.client.config.strategy>
-        <java.cas.client.config.location>/etc/java-cas-client.properties</java.cas.client.config.location>
-		<!-- You need to set the following for CAS auth in /etc/java-cas-client.properties
-            casServerLoginUrl=https://tech.wrighting.org/sso/login
-            serverName=http://localhost:8080 
-			ticketValidatorClass=org.jasig.cas.client.validation.Cas30ServiceTicketValidator
-            casServerUrlPrefix=https://tech.wrighting.org/sso
-            -->
-        <!-- share-global.properties casServerLogoutUrl -->
-        <!--  dont mind the «dest» word here, it's a typo -->
-        <cas.logout.dest.url>http://127.0.0.1:58080/cas/logout</cas.logout.dest.url>
-        <!-- share-global.properties casServerLogoutUrl -->
-        <!--  page where to redirect user after logout -->
-        <cas.logout.url>http://127.0.0.1:58080/</cas.logout.url>
-        <!-- share-global.properties casServiceParamName -->
-        <cas.service.param>service</cas.service.param>
-        <!-- share-global.properties passwordLink -->
-        <change.password.url />
 
-        <!-- Set a name so you can configure Share when you've logged in -->
-        <external.authentication.defaultAdministratorUserNames>admin,demo</external.authentication.defaultAdministratorUserNames>
 
-        <module.log.level>warn</module.log.level>
 
         <!-- Alfresco Maven Plugin version to use -->
-        <alfresco.sdk.version>3.0.0-beta-5</alfresco.sdk.version>
+        <alfresco.sdk.version>3.0.1</alfresco.sdk.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -60,26 +39,19 @@
         <!-- Alfresco Platform and Share webapp versions, these are the original Alfresco webapps that will be
              customized and then deployed and run by the tomcat maven plugin when
              executing for example $ mvn clean install alfresco:run -->
-        <alfresco.platform.version>5.1.g</alfresco.platform.version>
-        <alfresco.share.version>5.1.g</alfresco.share.version>
+        <alfresco.platform.version>5.2.f</alfresco.platform.version>
+        <alfresco.share.version>5.2.e</alfresco.share.version>
+
+		<!-- Default is to run with a Community edition, change to 'enterprise' 
+			if using Enterprise edition -->
+		<maven.alfresco.edition>community</maven.alfresco.edition>
 
         <!-- Alfresco Surf version, if you change Share version you might need to change Surf version -->
         <alfresco.surf.version>6.11</alfresco.surf.version>
 
-        <!-- Aikau framework version, it is released separately, so it can be useful to be able
-             to bring in newer versions with bug fixes etc -->
-        <aikau.version>1.0.101.3</aikau.version>
-
         <!-- JRebel Hot reloading of classpath stuff and web resource stuff -->
         <jrebel.version>1.1.6</jrebel.version>
-        
-        <!--  my custom props -->
-        <cifs.enabled>false</cifs.enabled>
-        <webdav.enabled>false</webdav.enabled>
-        <nfs.enabled>false</nfs.enabled>
-        <imap.enabled>false</imap.enabled>
-        <replication.enabled>false</replication.enabled>
-        <transferservice.receiver.enabled>false</transferservice.receiver.enabled>
+       
 
         <!-- Environment to use, Alfresco Maven Plugin will
              copy alfresco-global-*.properties files from this directory, such as src/test/properties/local -->
@@ -88,6 +60,43 @@
         <!-- Compile with Java 7, default is 5 -->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+
+        <!-- Aikau framework version, it is released separately, so it can be useful to be able
+             to bring in newer versions with bug fixes etc -->
+<!--//# my custom        <aikau.version>1.0.101.3</aikau.version> -->
+
+        <java.cas.client.config.strategy>PROPERTY_FILE</java.cas.client.config.strategy>
+        <java.cas.client.config.location>/etc/java-cas-client.properties</java.cas.client.config.location>
+		<!-- You need to set the following for CAS auth in /etc/java-cas-client.properties
+            casServerLoginUrl=https://tech.wrighting.org/sso/login
+            serverName=http://localhost:8080 
+			ticketValidatorClass=org.jasig.cas.client.validation.Cas30ServiceTicketValidator
+            casServerUrlPrefix=https://tech.wrighting.org/sso
+            -->
+        <!-- share-global.properties casServerLogoutUrl -->
+        <!--  dont mind the «dest» word here, it's a typo -->
+        <cas.logout.dest.url>http://127.0.0.1:58080/cas/logout</cas.logout.dest.url>
+        <!-- share-global.properties casServerLogoutUrl -->
+        <!--  page where to redirect user after logout -->
+        <cas.logout.url>http://127.0.0.1:58080/</cas.logout.url>
+        <!-- share-global.properties casServiceParamName -->
+        <cas.service.param>service</cas.service.param>
+        <!-- share-global.properties passwordLink -->
+        <change.password.url />
+
+        <!-- Set a name so you can configure Share when you've logged in -->
+        <external.authentication.defaultAdministratorUserNames>admin,demo</external.authentication.defaultAdministratorUserNames>
+
+        <module.log.level>warn</module.log.level>
+
+        <!--  my custom props -->
+        <cifs.enabled>false</cifs.enabled>
+        <webdav.enabled>false</webdav.enabled>
+        <nfs.enabled>false</nfs.enabled>
+        <imap.enabled>false</imap.enabled>
+        <replication.enabled>false</replication.enabled>
+        <transferservice.receiver.enabled>false</transferservice.receiver.enabled>
+
     </properties>
 
     <dependencyManagement>
@@ -143,16 +152,64 @@
                 <version>${alfresco.surf.version}</version>
                 <scope>provided</scope>
             </dependency>
-
+<!--//# my custom
 		   <dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>javax.servlet-api</artifactId>
 				<version>3.0.1</version>
 				<scope>provided</scope>
 			</dependency>
+-->
 
         </dependencies>
     </dependencyManagement>
+
+	<!-- Libs used in Unit and Integration tests -->
+	<!-- IMPORTANT - Test dependencies need to be here in the top parent POM 
+		as the Alfresco Maven IT Mojo runs as part of the parent project ... -->
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.5</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.2</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- The main Alfresco Repo dependency for compiling Java code in src/main/java -->
+		<dependency>
+			<groupId>${alfresco.groupId}</groupId>
+			<artifactId>alfresco-repository</artifactId>
+		</dependency>
+
+		<!-- Bring in Spring Context so we can use ApplicationContext, ApplicationContextAware 
+			etc -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>3.2.17.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Bring in Alfresco RAD so we get access to AlfrescoTestRunner classes -->
+		<dependency>
+			<groupId>org.alfresco.maven</groupId>
+			<artifactId>alfresco-rad</artifactId>
+			<version>${alfresco.sdk.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
     <build>
         <pluginManagement>
@@ -320,6 +377,8 @@
                         (i.e. alfresco.war)
                     -->
                     <platformModules>
+			<!-- Share Services will be ignored if you are on Platform earlier 
+							than 5.1 -->
                         <moduleDependency>
                             <groupId>${alfresco.groupId}</groupId>
                             <artifactId>alfresco-share-services</artifactId>
@@ -334,20 +393,14 @@
                             <version>${project.version}</version>
                             <type>amp</type>
                         </moduleDependency>
+
+
                     </platformModules>
 
                     <!--
                         JARs and AMPs that should be overlayed/applied to the Share WAR (i.e. share.war)
                     -->
                     <shareModules>
-                        <moduleDependency>
-                            <!-- Bring in a newer version of Aikau, can coexist with older versions in the
-                                WAR distribution, newest version is picked. -->
-                            <groupId>${alfresco.groupId}</groupId>
-                            <artifactId>aikau</artifactId>
-                            <version>${aikau.version}</version>
-                        </moduleDependency>
-
                         <!-- Bring in custom Modules -->
                         <moduleDependency>
                             <groupId>${project.groupId}</groupId>
@@ -355,6 +408,13 @@
                             <version>${project.version}</version>
                             <type>amp</type>
                         </moduleDependency>
+<!--//# my custom
+                        <moduleDependency>
+                            <groupId>${alfresco.groupId}</groupId>
+                            <artifactId>aikau</artifactId>
+                            <version>${aikau.version}</version>
+                        </moduleDependency>
+-->
                     </shareModules>
                 </configuration>
             </plugin>
@@ -384,6 +444,8 @@
                                 Empty resource element marks default configuration. By
                                 default it is placed first in generated configuration.
                                 -->
+				<directory>${project.build.outputDirectory}</directory>
+				<directory>${project.build.testOutputDirectory}</directory>
                             </resource>
                         </resources>
                     </classpath>
@@ -395,95 +457,10 @@
                     -->
                     <alwaysGenerate>true</alwaysGenerate>
 	                <!-- //# my redefinition to skip jrebel from being used -->
-					<skip>true</skip>
+			<skip>true</skip>
                 </configuration>
             </plugin>
 
-            <!-- 
-mvn jgitflow:release-start
-mvn jgitflow:release-finish
--->
-            <plugin>
-              <groupId>com.atlassian.maven.plugins</groupId>
-              <artifactId>maven-jgitflow-plugin</artifactId>
-              <version>1.0-alpha20</version>
-              <configuration>
-                <!-- Enable this to push to origin using SSH keys -->
-                <enableSshAgent>true</enableSshAgent>
-                <!-- Keep your maven submodules at the same version as the parent POM -->
-                <autoVersionSubmodules>true</autoVersionSubmodules>
-                <!--
-                  Pusing in-development features to origin allows all devs to see what each other
-                  are working on
-                -->
-                <pushFeatures>true</pushFeatures>
-                <!--
-                  This allows the CI server (e.g. Jenkins) to automatically push new releases to
-                  origin; you can then either manually deploy them or, if you are doing Continuous
-                  Deployments, auto-deploy them to prod
-                -->
-                <pushReleases>true</pushReleases>
-                <!--
-                  Hot Fixes should be pushed to origin as well so that any dev can pick them up
-                -->
-                <pushHotfixes>true</pushHotfixes>
-                <!--
-                  Prevents deployments from dev workstations so that they can be done by a CI
-                  server
-                -->
-                <noDeploy>true</noDeploy>
-                <flowInitContext>
-                  <!--
-                    You can customize your development branch name. Why? Because it's faster to type
-                    'git push origin dvlp'
-                    than
-                    'git push origin develop'
-                    ;-)
-                  -->
-                  <developBranchName>dvlp</developBranchName>
-                </flowInitContext>
-              </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
-    <!--
-        Alfresco Maven Repositories
-        -->
-    <repositories>
-        <repository>
-            <id>alfresco-public</id>
-            <url>https://artifacts.alfresco.com/nexus/content/groups/public</url>
-        </repository>
-        <repository>
-            <id>alfresco-public-snapshots</id>
-            <url>https://artifacts.alfresco.com/nexus/content/groups/public-snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-            </snapshots>
-        </repository>
-        <!-- Alfresco Enterprise Edition Artifacts, put username/pwd for server in settings.xml -->
-        <repository>
-            <id>alfresco-private-repository</id>
-            <url>https://artifacts.alfresco.com/nexus/content/groups/private</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>alfresco-plugin-public</id>
-            <url>https://artifacts.alfresco.com/nexus/content/groups/public</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>alfresco-plugin-public-snapshots</id>
-            <url>https://artifacts.alfresco.com/nexus/content/groups/public-snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
-    
     <profiles>
 		<profile>
 			<id>webxml</id>
@@ -515,6 +492,7 @@ mvn jgitflow:release-finish
 										</replacement>
 
 									</replacements>
+								<skip>true</skip>
 								</configuration>
 							</execution>
 						</executions>
@@ -542,6 +520,42 @@ mvn jgitflow:release-finish
             </build>
         </profile>
 	</profiles>
+
+	<!-- Alfresco Maven Repositories -->
+	<repositories>
+		<repository>
+			<id>alfresco-public</id>
+			<url>https://artifacts.alfresco.com/nexus/content/groups/public</url>
+		</repository>
+		<repository>
+			<id>alfresco-public-snapshots</id>
+			<url>https://artifacts.alfresco.com/nexus/content/groups/public-snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>daily</updatePolicy>
+			</snapshots>
+		</repository>
+		<!-- Alfresco Enterprise Edition Artifacts, put username/pwd for server 
+			in settings.xml -->
+		<repository>
+			<id>alfresco-private-repository</id>
+			<url>https://artifacts.alfresco.com/nexus/content/groups/private</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>alfresco-plugin-public</id>
+			<url>https://artifacts.alfresco.com/nexus/content/groups/public</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>alfresco-plugin-public-snapshots</id>
+			<url>https://artifacts.alfresco.com/nexus/content/groups/public-snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>daily</updatePolicy>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 	
   <modules>
     <module>alfresco-cas-platform-amp</module>
