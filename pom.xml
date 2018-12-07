@@ -18,8 +18,10 @@
             casServerUrlPrefix=https://tech.wrighting.org/sso
             -->
         <!-- share-global.properties casServerLogoutUrl -->
+        <!--  dont mind the «dest» word here, it's a typo -->
         <cas.logout.dest.url>http://127.0.0.1:58080/cas/logout</cas.logout.dest.url>
         <!-- share-global.properties casServerLogoutUrl -->
+        <!--  page where to redirect user after logout -->
         <cas.logout.url>http://127.0.0.1:58080/</cas.logout.url>
         <!-- share-global.properties casServiceParamName -->
         <cas.service.param>service</cas.service.param>
@@ -27,7 +29,7 @@
         <change.password.url />
 
         <!-- Set a name so you can configure Share when you've logged in -->
-        <external.authentication.defaultAdministratorUserNames>admin</external.authentication.defaultAdministratorUserNames>
+        <external.authentication.defaultAdministratorUserNames>admin,demo</external.authentication.defaultAdministratorUserNames>
 
         <module.log.level>warn</module.log.level>
 
@@ -70,6 +72,14 @@
 
         <!-- JRebel Hot reloading of classpath stuff and web resource stuff -->
         <jrebel.version>1.1.6</jrebel.version>
+        
+        <!--  my custom props -->
+        <cifs.enabled>false</cifs.enabled>
+        <webdav.enabled>false</webdav.enabled>
+        <nfs.enabled>false</nfs.enabled>
+        <imap.enabled>false</imap.enabled>
+        <replication.enabled>false</replication.enabled>
+        <transferservice.receiver.enabled>false</transferservice.receiver.enabled>
 
         <!-- Environment to use, Alfresco Maven Plugin will
              copy alfresco-global-*.properties files from this directory, such as src/test/properties/local -->
@@ -209,6 +219,8 @@
                         </nonFilteredFileExtensions>
                     </configuration>
                 </plugin>
+
+
                 <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
                 <plugin>
                 	<groupId>org.eclipse.m2e</groupId>
@@ -382,6 +394,8 @@
                       If 'true' - rebel.xml will always be generated
                     -->
                     <alwaysGenerate>true</alwaysGenerate>
+	                <!-- //# my redefinition to skip jrebel from being used -->
+					<skip>true</skip>
                 </configuration>
             </plugin>
 
@@ -533,11 +547,5 @@ mvn jgitflow:release-finish
     <module>alfresco-cas-platform-amp</module>
     <module>alfresco-cas-share-amp</module>
   </modules>
-
-  <scm>
-    <connection>scm:git:git@github.com:wrighting/alfresco-cas.git</connection>
-    <url>scm:git:git@github.com:wrighting/alfresco-cas.git</url>
-    <developerConnection>scm:git:git@github.com:wrighting/alfresco-cas.git</developerConnection>
-    <tag>HEAD</tag>
-  </scm>
+  
 </project>

@@ -18,7 +18,7 @@
       <customizations>
         <customization>
           <targetPackageRoot>org.alfresco.share.header</targetPackageRoot>
-          <sourcePackageRoot>pt.ua.alfresco.usermenu</sourcePackageRoot>
+          <sourcePackageRoot>org.sso.alfresco.usermenu</sourcePackageRoot>
         </customization>
       </customizations>
     </module>
