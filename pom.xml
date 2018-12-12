@@ -39,8 +39,8 @@
         <!-- Alfresco Platform and Share webapp versions, these are the original Alfresco webapps that will be
              customized and then deployed and run by the tomcat maven plugin when
              executing for example $ mvn clean install alfresco:run -->
-        <alfresco.platform.version>5.2.f</alfresco.platform.version>
-        <alfresco.share.version>5.2.e</alfresco.share.version>
+        <alfresco.platform.version>5.1.g</alfresco.platform.version>
+        <alfresco.share.version>5.1.g</alfresco.share.version>
 
 		<!-- Default is to run with a Community edition, change to 'enterprise' 
 			if using Enterprise edition -->
@@ -152,14 +152,14 @@
                 <version>${alfresco.surf.version}</version>
                 <scope>provided</scope>
             </dependency>
-<!--//# my custom
-		   <dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>javax.servlet-api</artifactId>
-				<version>3.0.1</version>
-				<scope>provided</scope>
-			</dependency>
--->
+
+	   <dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>javax.servlet-api</artifactId>
+		<version>3.0.1</version>
+		<scope>provided</scope>
+	   </dependency>
+
 
         </dependencies>
     </dependencyManagement>
@@ -447,7 +447,6 @@
 										</replacement>
 
 									</replacements>
-								<skip>true</skip>
 								</configuration>
 							</execution>
 						</executions>
