@@ -19,7 +19,7 @@
         <feed.endpoint>http://localhost:8080/alfresco/wcs</feed.endpoint>
         <api.endpoint>http://localhost:8080/alfresco/api</api.endpoint>
         <!-- for 5.0.c to 5.1.f inclusive
-             <connector.package>ptua.alfresco</connector.package>
+             <connector.package>org.alfresco</connector.package>
         -->
         <connector.package>alfresco</connector.package>
 

@@ -4,7 +4,7 @@ import static org.alfresco.web.site.SlingshotPageView.REDIRECT_QUERY;
 import static org.alfresco.web.site.SlingshotPageView.REDIRECT_URI;
 
 import java.io.IOException;
-import java.util.Map;
+//import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
