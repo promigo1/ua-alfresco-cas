@@ -75,10 +75,10 @@
             -->
         <!-- share-global.properties casServerLogoutUrl -->
         <!--  dont mind the «dest» word here, it's a typo -->
-        <cas.logout.dest.url>http://127.0.0.1:58080/cas/logout</cas.logout.dest.url>
+        <cas.logout.dest.url>https://bioinformatics.ua.pt/netdmd-test/cas/logout</cas.logout.dest.url>
         <!-- share-global.properties casServerLogoutUrl -->
         <!--  page where to redirect user after logout -->
-        <cas.logout.url>http://127.0.0.1:58080/</cas.logout.url>
+        <cas.logout.url>https://bioinformatics.ua.pt/netdmd-test/</cas.logout.url>
         <!-- share-global.properties casServiceParamName -->
         <cas.service.param>service</cas.service.param>
         <!-- share-global.properties passwordLink -->
